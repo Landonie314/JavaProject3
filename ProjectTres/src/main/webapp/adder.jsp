@@ -19,9 +19,9 @@
 		%>
 		Please select the outlook:<br><%=selectionText%><br> 
 		Please select the temperature:<br>
-		<input type="number" name="temper" min="0" max="100" value="0"><br>
+		<input type="number" name="temper" min="1" max="100" value="1"><br>
 		Please select the humidity:<br>
-		<input type="number" name="humid" min="1" max="100" value="0"><br>
+		<input type="number" name="humid" min="1" max="100" value="1"><br>
 		Please select if it is windy:<br><%=selectionText2%><br>
 		<br><input type="submit" value="Get Predicted Activity!" name="preButton">
 	</form>

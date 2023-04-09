@@ -7,6 +7,11 @@
 <title>Invalid Login</title>
 </head>
 <body>
-		
+		<form action=http://localhost:8080/ProjectTres/Servlet	method="get">
+		Login Credentials invalid:<br>
+		Enter your username: <input type="text" name="userName"> <br>
+		Enter your password: <input type="password" name="password"> <br>
+		<input type="submit" value="Login" name="indexButton">
+	</form>
 </body>
 </html>

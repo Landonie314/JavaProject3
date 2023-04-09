@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Predictor myData;
+	boolean myUser = false;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -37,14 +38,23 @@ public class Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String pass = request.getParameter("password");
 		String user = request.getParameter("userName");
-		String pass = request.getParameter("passWord");
+		request.setAttribute("password", pass);
 		request.setAttribute("userName",user); 
-		request.setAttribute("passWord", pass);
 		
 		
-		if(request.getParameter("indexButton")!=null) {
-			if(user.equals("md") && pass.equals("pw")) {
+		
+		
+			if(request.getParameter("indexButton")!=null) {
+//			if(user.equals("md")&& pass.equals("pw")) {
+//				myUser = true;
+//			}
+//			else {
+//				RequestDispatcher rd=request.getRequestDispatcher("/reLog.jsp");
+//				rd.forward(request,response);
+//				}
+//			if(myUser == true) {
 			response.getWriter().append("<!DOCTYPE html>\r\n" + 
 					"<html>\r\n" + 
 					"<head>\r\n" + 
@@ -62,20 +72,36 @@ public class Servlet extends HttpServlet {
 					"<input type=\"submit\" value=\"Delete Instance\" name=\"deleteButton\">\r\n" + 
 					"	</form>\r\n" + 
 					"</body>\r\n" + 
-					"</html>");
-			
+					"</html>");			
 			}
-			else {
-				
-			}
-		}
-		else {
+		//}
+//		else {
+//			RequestDispatcher rd=request.getRequestDispatcher("/index.html");
+//			rd.forward(request,response);
+//			}
+		
+		//if(myUser == true) {
+		if(request.getParameter("LogOutBtn")!=null) {
+			myUser = false;
+			pass="";
 			RequestDispatcher rd=request.getRequestDispatcher("/index.html");
 			rd.forward(request,response);
 		}
 		
+		if(request.getParameter("removeButton")!=null) {
+			String tmp = request.getParameter("deleter");
+			int tmps = Integer.parseInt(tmp);
+			myData.removeInstance((tmps-1));
+			myData.doWrite("./project3/data2.txt");
+			String fort =  Integer.toString(myData.getSize());
+			request.setAttribute("total", fort);
+			RequestDispatcher rd=request.getRequestDispatcher("/Test.jsp");
+			rd.forward(request,response);
+		}
+		
 		if(request.getParameter("deleteButton")!=null) {
-			
+			String fort =  Integer.toString(myData.getSize());
+			request.setAttribute("total", fort);
 			RequestDispatcher rd=request.getRequestDispatcher("/Test.jsp");
 			rd.forward(request,response);
 		}		
@@ -133,8 +159,10 @@ public class Servlet extends HttpServlet {
 			RequestDispatcher rd=request.getRequestDispatcher("/result.jsp");
 			rd.forward(request,response);
 		}
+		
+		}
 			
-	}
+	//}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
