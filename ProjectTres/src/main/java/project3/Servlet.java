@@ -92,7 +92,7 @@ public class Servlet extends HttpServlet {
 			String tmp = request.getParameter("deleter");
 			int tmps = Integer.parseInt(tmp);
 			myData.removeInstance((tmps-1));
-			myData.doWrite("./project3/data2.txt");
+			//myData.doWrite("./project3/data2.txt");
 			String fort =  Integer.toString(myData.getSize());
 			request.setAttribute("total", fort);
 			RequestDispatcher rd=request.getRequestDispatcher("/Test.jsp");
