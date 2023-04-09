@@ -19,3 +19,5 @@ rainy,68,80,false,tennis
 rainy,65,70,true,video games
 overcast,64,65,true,running
 sunny,72,95,false,tennis
+tornado,70,100,false,tennis
+tornado,100,45,false,video games

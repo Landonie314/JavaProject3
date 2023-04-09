@@ -1,6 +1,8 @@
-//Landon Jones
-//03/06/2023
-//Java Project 2
+/*
+ * Landon Jones
+ * Project 3
+ * 04/11/2023
+ */
 package project3;
 import java.io.*;
 import java.util.*;
@@ -17,6 +19,7 @@ public class Predictor {
 	private String [] activity;
 	private String thing;
 	private ArrayList <String> acty;
+	private ArrayList <String> wety;
 		
 	
 		
@@ -138,6 +141,24 @@ public class Predictor {
 			String [] toReturn = new String [acty.size()];
 			int index = 0;
 			for(String string : acty) {
+				toReturn[index] = string;
+				index++;
+			}
+			//return
+			return toReturn;
+		}
+		
+		public String [] getWeather(){
+			wety = new ArrayList <String>();
+			for(Instance instance : pre) {
+					if (!wety.contains(instance.getOutlook())) {
+						wety.add(instance.getOutlook());
+				}
+			
+			}
+			String [] toReturn = new String [wety.size()];
+			int index = 0;
+			for(String string : wety) {
 				toReturn[index] = string;
 				index++;
 			}

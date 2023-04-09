@@ -1,3 +1,8 @@
+/*
+ * Landon Jones
+ * Java Project 3
+ * 4/11/2023
+ */
 package project3;
 
 import java.io.IOException;
@@ -39,6 +44,7 @@ public class Servlet extends HttpServlet {
 		
 		
 		if(request.getParameter("indexButton")!=null) {
+			if(user.equals("md") && pass.equals("pw")) {
 			response.getWriter().append("<!DOCTYPE html>\r\n" + 
 					"<html>\r\n" + 
 					"<head>\r\n" + 
@@ -51,67 +57,83 @@ public class Servlet extends HttpServlet {
 			response.getWriter().append(user+" here are your choices:<br>	<form action=http://localhost:8080/ProjectTres/Servlet\r\n" + 
 					"		method=\"get\">\r\n" + 
 					"		<input type=\"hidden\" value=\""+user+"\" name=\"userName\">\r\n" + 
-					"		<input type=\"submit\" value=\"View Instances\" name=\"viewButton\">\r\n" + 
-					"		<input type=\"submit\" value=\"Add Instance\" name=\"addButton\">\r\n" + 
+					"		<input type=\"submit\" value=\"Predict Activity\" name=\"viewButton\">\r\n" + 
+					"		<input type=\"submit\" value=\"Logout\" name=\"LogOutBtn\">\r\n" + 
 					"<input type=\"submit\" value=\"Delete Instance\" name=\"deleteButton\">\r\n" + 
 					"	</form>\r\n" + 
 					"</body>\r\n" + 
 					"</html>");
 			
-			
-			response.getWriter().append(
-					myData.toString()+
-					"</body>\r\n" + 
-					"</html>");
-			
+			}
+			else {
+				
+			}
+		}
+		else {
+			RequestDispatcher rd=request.getRequestDispatcher("/index.html");
+			rd.forward(request,response);
 		}
 		
-		if(request.getParameter("viewButton")!=null) {
+		if(request.getParameter("deleteButton")!=null) {
 			
 			RequestDispatcher rd=request.getRequestDispatcher("/Test.jsp");
 			rd.forward(request,response);
 		}		
-		if(request.getParameter("addButton")!=null) {
-			String value = "<select name=\"activities\">";
-//			Iterator<Instance> iter = myData.getIterator();
-//			while (iter.hasNext()) {
-//				Instance c = iter.next();
-				
-				String [] temp = myData.getActivities();
-				for(int num = temp.length; num > 0; num--) {
-				value += "<option value=\""+temp[num-1]+"\">"+temp[num-1]+"</option>";
-				}
+		//Predict parameter fillout screen
+		if(request.getParameter("viewButton")!=null) {
+			//forcast
+			String value = "<select name=\"weather\">";
+			String value2 = "<select name=\"windy\">";
+			
+			
+			
+			//get values of all weather options and store them in value1 variable
+			String [] temp = myData.getWeather();
+			for(int num=0; num < temp.length; num++) {
+				value += "<option value=\""+temp[num]+"\">"+temp[num]+"</option>";
+			}
 			value += "</select>\r\n";
-			request.setAttribute("dropDownOptions",value); 	
+			
+			String [] temp2 = {"true", "false"};
+			value2 += "<option value=\"" + temp2[0] + "\">"+ temp2[0]+"</option>";
+			value2 += "<option value=\"" + temp2[1] + "\">"+ temp2[1]+"</option>";
+			
+			request.setAttribute("dropDownOptions",value);
+			request.setAttribute("dropDownOptions2", value2);
 			RequestDispatcher rd=request.getRequestDispatcher("/adder.jsp");
 			rd.forward(request,response);
+			
 		}		
-		if(request.getParameter("pickColorButton")!=null) {
-			response.getWriter().append("<html>\r\n" + 
-					"<head>\r\n" + 
-					"<meta charset=\"ISO-8859-1\">\r\n" + 
-					"<title>Insert title here</title>\r\n" + 
-					"</head>\r\n" + 
-					"<body>\r\n" + 
-					user+"	\r\n" + 
-					"	<form action=\"/ProjectTres/Servlet\" method=\"get\">\r\n" + 
-					"	    <input type=\"hidden\" value="+user+" name=\"userName\">\r\n" + 
-					"		\r\n" + 
-					"		Please select a color:<br>\r\n" + 
-					"		<select name=\"backgroundColor\">\r\n" + 
-					"			<option value=\"powderblue\">powderblue</option>\r\n" + 
-					"			<option value=\"Tomato\">Tomato</option>\r\n" + 
-					"			<option value=\"Orange\">Orange</option>\r\n" + 
-					"			<option value=\"LightGray\">LightGray</option>\r\n" + 
-					"			<option value=\"SlateBlue\">SlateBlue</option>\r\n" + 
-					"			<option value=\"MediumSeaGreen\">MediumSeaGreen</option>\r\n" + 
-					"		</select>\r\n" + 
-					"		<br> \r\n" + 
-					"		<input type=\"submit\" value=\"Go!\" name=\"indexButton\">\r\n" + 
-					"	</form>\r\n" + 
-					"</body>\r\n" + 
-					"</html>");
-		}		
+		//Predict button
+		if(request.getParameter("preButton")!=null) {
+			//Store all the values
+		String one = request.getParameter("weather");
+		String two = request.getParameter("windy");
+		String three = request.getParameter("humid");
+		String four = request.getParameter("temper");
+		request.setAttribute("weather", one);
+		request.setAttribute("windy", two);
+		request.setAttribute("humid", three);
+		request.setAttribute("temper", four);
+		
+		//convert from string to integer
+		int humidityNum = Integer.parseInt(three);
+		int temperNum = Integer.parseInt(four);
+		//convert to boolean
+		boolean isWind = false;
+		if(two.equals("true")) {
+			isWind = true;
+		}
+		else if(two.equals("false")) {
+			isWind = false;
+		}
+		//call predict
+		String resultAct = myData.getActivity(one, temperNum, humidityNum, isWind);
+			request.setAttribute("tey", resultAct);
+			RequestDispatcher rd=request.getRequestDispatcher("/result.jsp");
+			rd.forward(request,response);
+		}
+			
 	}
 
 	/**

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Add Instance</title>
+<title>Prediction</title>
 </head>
 <body>
 <%
@@ -15,9 +15,15 @@
 	    <input type="hidden" value=<%=name%> name="userName">
 		<%
 			String selectionText = (String) request.getAttribute("dropDownOptions");
+			String selectionText2 = (String) request.getAttribute("dropDownOptions2");
 		%>
-		Please select a activity:<br><%=selectionText%><br> 
-		<input type="submit" value="Get Info!" name="getCarInfo">
+		Please select the outlook:<br><%=selectionText%><br> 
+		Please select the temperature:<br>
+		<input type="number" name="temper" min="0" max="100" value="0"><br>
+		Please select the humidity:<br>
+		<input type="number" name="humid" min="1" max="100" value="0"><br>
+		Please select if it is windy:<br><%=selectionText2%><br>
+		<br><input type="submit" value="Get Predicted Activity!" name="preButton">
 	</form>
 </body>
 </html>

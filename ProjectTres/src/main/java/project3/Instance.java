@@ -1,6 +1,8 @@
-//Landon Jones
-//03/06/2023
-//Java Project 2
+/*
+ * Landon Jones
+ * Project 3
+ * 04/11/2023
+ */
 
 package project3;
 
