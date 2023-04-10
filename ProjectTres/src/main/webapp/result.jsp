@@ -9,6 +9,7 @@
 <body>
 <%
 		String name = (String) request.getAttribute("userName");
+        String pass = (String) request.getAttribute("passWord");
 		String action = (String) request.getAttribute("tey");
 		String weather = (String) request.getAttribute("weather");
 		String temper = (String) request.getAttribute("temper");
@@ -24,6 +25,7 @@
 	    <input type="hidden" value=<%=temper%> name="temper">
 	    <input type="hidden" value=<%=humid%> name="humid">
 	    <input type="hidden" value=<%=name%> name="userName">
+	    <input type="hidden" value=<%=pass%> name="passWord">
 	    
 	    This is predicted based on the following inputs:<br>
 	    Outlook: <%=weather%><br>

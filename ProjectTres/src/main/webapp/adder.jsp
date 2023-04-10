@@ -9,10 +9,12 @@
 <body>
 <%
 		String name = (String) request.getAttribute("userName");
+		String pass = (String) request.getAttribute("passWord");
 	%>
 	<%=name%> 
 	<form action="/ProjectTres/Servlet" method="get">
 	    <input type="hidden" value=<%=name%> name="userName">
+	    <input type="hidden" value=<%=pass%> name="passWord">
 		<%
 			String selectionText = (String) request.getAttribute("dropDownOptions");
 			String selectionText2 = (String) request.getAttribute("dropDownOptions2");

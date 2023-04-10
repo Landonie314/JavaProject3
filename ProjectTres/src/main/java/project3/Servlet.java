@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Predictor myData;
-	boolean myUser = false;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -38,28 +37,25 @@ public class Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pass = request.getParameter("password");
+		String pass = request.getParameter("passWord");
 		String user = request.getParameter("userName");
-		request.setAttribute("password", pass);
+		request.setAttribute("passWord", pass);
 		request.setAttribute("userName",user); 
 		
+		if(!user.equals("md")&& !pass.equals("pw")) {
+			RequestDispatcher rd=request.getRequestDispatcher("/reLog.jsp");
+			rd.forward(request,response);
+		}
 		
-		
+		else {
+			
 		
 			if(request.getParameter("indexButton")!=null) {
-//			if(user.equals("md")&& pass.equals("pw")) {
-//				myUser = true;
-//			}
-//			else {
-//				RequestDispatcher rd=request.getRequestDispatcher("/reLog.jsp");
-//				rd.forward(request,response);
-//				}
-//			if(myUser == true) {
 			response.getWriter().append("<!DOCTYPE html>\r\n" + 
 					"<html>\r\n" + 
 					"<head>\r\n" + 
 					"<meta charset=\"ISO-8859-1\">\r\n" + 
-					"<title>Insert title here</title>\r\n" + 
+					"<title>Homepage</title>\r\n" + 
 					"</head>\r\n" +
 					"</body>\r\n" ); 
 			
@@ -67,6 +63,7 @@ public class Servlet extends HttpServlet {
 			response.getWriter().append(user+" here are your choices:<br>	<form action=http://localhost:8080/ProjectTres/Servlet\r\n" + 
 					"		method=\"get\">\r\n" + 
 					"		<input type=\"hidden\" value=\""+user+"\" name=\"userName\">\r\n" + 
+					"		<input type=\"hidden\" value=\""+pass+"\" name=\"passWord\">\r\n" + 
 					"		<input type=\"submit\" value=\"Predict Activity\" name=\"viewButton\">\r\n" + 
 					"		<input type=\"submit\" value=\"Logout\" name=\"LogOutBtn\">\r\n" + 
 					"<input type=\"submit\" value=\"Delete Instance\" name=\"deleteButton\">\r\n" + 
@@ -74,21 +71,20 @@ public class Servlet extends HttpServlet {
 					"</body>\r\n" + 
 					"</html>");			
 			}
-		//}
+		
 //		else {
 //			RequestDispatcher rd=request.getRequestDispatcher("/index.html");
 //			rd.forward(request,response);
 //			}
 		
-		//if(myUser == true) {
-		if(request.getParameter("LogOutBtn")!=null) {
-			myUser = false;
+		
+			else if(request.getParameter("LogOutBtn")!=null) {
 			pass="";
 			RequestDispatcher rd=request.getRequestDispatcher("/index.html");
 			rd.forward(request,response);
 		}
 		
-		if(request.getParameter("removeButton")!=null) {
+			else if(request.getParameter("removeButton")!=null) {
 			String tmp = request.getParameter("deleter");
 			int tmps = Integer.parseInt(tmp);
 			myData.removeInstance((tmps-1));
@@ -99,14 +95,14 @@ public class Servlet extends HttpServlet {
 			rd.forward(request,response);
 		}
 		
-		if(request.getParameter("deleteButton")!=null) {
+			else if(request.getParameter("deleteButton")!=null) {
 			String fort =  Integer.toString(myData.getSize());
 			request.setAttribute("total", fort);
 			RequestDispatcher rd=request.getRequestDispatcher("/Test.jsp");
 			rd.forward(request,response);
 		}		
 		//Predict parameter fillout screen
-		if(request.getParameter("viewButton")!=null) {
+			else if(request.getParameter("viewButton")!=null) {
 			//forcast
 			String value = "<select name=\"weather\">";
 			String value2 = "<select name=\"windy\">";
@@ -131,7 +127,7 @@ public class Servlet extends HttpServlet {
 			
 		}		
 		//Predict button
-		if(request.getParameter("preButton")!=null) {
+			else if(request.getParameter("preButton")!=null) {
 			//Store all the values
 		String one = request.getParameter("weather");
 		String two = request.getParameter("windy");
@@ -158,11 +154,13 @@ public class Servlet extends HttpServlet {
 			request.setAttribute("tey", resultAct);
 			RequestDispatcher rd=request.getRequestDispatcher("/result.jsp");
 			rd.forward(request,response);
-		}
+				}
 		
-		}
+			}
+		
+	}
 			
-	//}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

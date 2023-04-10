@@ -8,6 +8,8 @@
 </head>
 <body>
 	<%
+	String pass = (String) request.getAttribute("passWord");
+	String name = (String) request.getAttribute("userName");
 	String fort = (String) request.getAttribute("total"); 
 	int rado = Integer.parseInt(fort);
 	%>
@@ -17,6 +19,8 @@
     <input type="number" value="1" name="deleter" min="1" max="<%=rado%>" >
     <input type="submit" value="Delete" name="removeButton"> <br>
     <input type="submit" value="return to home" name="indexButton">
+    <input type="hidden" value=<%=name%> name="userName">
+    <input type="hidden" value=<%=pass%> name="passWord">
    	</form>
    
 </body>
