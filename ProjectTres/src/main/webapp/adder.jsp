@@ -8,6 +8,7 @@
 </head>
 <body>
 <%
+		//Getting all of the values from the servlet to use in the .jsp
 		String name = (String) request.getAttribute("userName");
 		String pass = (String) request.getAttribute("passWord");
 	%>

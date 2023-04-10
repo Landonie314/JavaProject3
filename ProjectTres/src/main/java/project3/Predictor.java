@@ -148,6 +148,7 @@ public class Predictor {
 			return toReturn;
 		}
 		
+		//Added for project 3
 		public String [] getWeather(){
 			wety = new ArrayList <String>();
 			for(Instance instance : pre) {
